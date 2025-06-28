@@ -192,9 +192,6 @@
 # print(f"Zones covered: {', '.join(result_df['Zone'].unique())}")
 
 import pandas as pd
-from openpyxl import Workbook
-from openpyxl.utils.dataframe import dataframe_to_rows
-import numpy as np
 
 # === CONFIGURATION ===
 truck_types = [
@@ -417,27 +414,27 @@ print("3. Truck_Types - Truck specifications")
 print("4. Summary_by_Zone - Summary statistics by zone")
 
 # Display summary
-print(f"\n=== OPTIMIZATION SUMMARY ===")
+print("\n=== OPTIMIZATION SUMMARY ===")
 print(f"Total trucks assigned: {len(result_df['Truck_ID'].unique())}")
 print(f"Total orders processed: {len(result_df)}")
 print(f"Total estimated fuel required: {result_df['Estimated_Fuel_L'].sum():.2f} liters")
 print(f"Zones covered: {', '.join(sorted(result_df['Zone'].unique()))}")
 
-print(f"\n=== ZONE BREAKDOWN ===")
+print("\n=== ZONE BREAKDOWN ===")
 for _, row in summary_df.iterrows():
     print(
         f"{row['Zone']}: {row['Number_of_Trucks']} trucks, {row['Orders_Count']} orders, {row['Total_Fuel_Required_L']}L fuel")
 
-print(f"\n=== EFFICIENCY ANALYSIS ===")
+print("\n=== EFFICIENCY ANALYSIS ===")
 summary_df['Fuel_per_Order'] = summary_df['Total_Fuel_Required_L'] / summary_df['Orders_Count']
 most_efficient = summary_df.loc[summary_df['Fuel_per_Order'].idxmin()]
 least_efficient = summary_df.loc[summary_df['Fuel_per_Order'].idxmax()]
 print(f"Most efficient zone: {most_efficient['Zone']} ({most_efficient['Fuel_per_Order']:.2f}L per order)")
 print(f"Least efficient zone: {least_efficient['Zone']} ({least_efficient['Fuel_per_Order']:.2f}L per order)")
 
-print(f"\n=== TRUCK TYPE USAGE ===")
+print("\n=== TRUCK TYPE USAGE ===")
 truck_usage = result_df['Truck_Type'].value_counts()
 for truck_type, count in truck_usage.items():
     print(f"{truck_type}: {count} assignments")
 
-print(f"\nOptimization complete! ✅")
+print("\nOptimization complete! ✅")
